@@ -122,7 +122,7 @@ namespace Spg.SpengerShop.Domain.Test
             db.SaveChanges();
 
             Assert.Equal(1, db.Customers.Count());
-            Assert.Equal(1, db.ShoppingCarts.Count());
+            Assert.Equal(0, db.ShoppingCarts.Count());
         }
     }
 }
