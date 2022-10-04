@@ -24,8 +24,9 @@ namespace Spg.SpengerShop.Domain.Test
         [Fact]
         public void DomainModel_Create_Product_Success_Test()
         {
+            // Arrange
             SpengerShopContext db = GetContext();
-            
+
             Product newProduct = new Product()
             {
                 DeliveryDate = DateTime.Now,
@@ -37,9 +38,11 @@ namespace Spg.SpengerShop.Domain.Test
                 Stock = 10
             };
 
+            // Act
             db.Products.Add(newProduct);
             db.SaveChanges();
 
+            // Assert
             Assert.Equal(1, db.Products.Count());
         }
 
@@ -67,6 +70,7 @@ namespace Spg.SpengerShop.Domain.Test
         [Fact]
         public void DomainModel_AddShoppingCartToCustomer_Success_Test()
         {
+            // Arrange
             SpengerShopContext db = GetContext();
 
             Customer newCustomer = new Customer()
@@ -84,10 +88,12 @@ namespace Spg.SpengerShop.Domain.Test
             {
             };
 
+            // Act
             newCustomer.AddShoppingCart(newShoppingCart);
 
             db.SaveChanges();
 
+            // Assert
             Assert.Equal(1, db.Customers.Count());
             Assert.Equal(1, db.ShoppingCarts.Count());
         }

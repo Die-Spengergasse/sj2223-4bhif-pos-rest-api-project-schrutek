@@ -16,8 +16,9 @@ namespace Spg.SpengerShop.Domain.Model
         public string EMail { get; set; } = string.Empty;
         public Guid Guid { get; set; }
         public DateTime? RegistrationDateTime { get; set; }
-        
-        
+        //public PhoneNumber PhoneNumber { get; set; }
+
+
         private List<ShoppingCart> _schoppingCarts = new();
         public IReadOnlyList<ShoppingCart> ShoppingCarts => _schoppingCarts;
 

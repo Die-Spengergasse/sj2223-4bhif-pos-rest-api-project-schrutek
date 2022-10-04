@@ -37,6 +37,7 @@ namespace Spg.SpengerShop.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().HasKey(e => e.Name);
+            //modelBuilder.Entity<Customer>().OwnsOne(p => p.PhoneNumber);
         }
     }
 }

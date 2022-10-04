@@ -16,6 +16,7 @@ namespace Spg.SpengerShop.Domain.Model
 
         public int Id { get; set; }
         public decimal Price { get; set; }
+        public int Pieces { get; set; }
 
         public int ProductNavigationId { get; set; }
         public Product ProductNavigation { get; set; } = default!;
