@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.SpengerShop.Application
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.SpengerShop.Repository", "src\Spg.SpengerShop.Repository\Spg.SpengerShop.Repository.csproj", "{038FB018-AEA0-4801-90BA-C29216F5B4D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spg.SpengerShop.Domain.Test", "src\Spg.SpengerShop.Domain.Test\Spg.SpengerShop.Domain.Test.csproj", "{AEA7629D-3773-4FD2-8CF9-3F57A0070506}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.SpengerShop.Domain.Test", "src\Spg.SpengerShop.Domain.Test\Spg.SpengerShop.Domain.Test.csproj", "{AEA7629D-3773-4FD2-8CF9-3F57A0070506}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.SpengerShop.MvcFrontEnd", "src\Spg.SpengerShop.MvcFrontEnd\Spg.SpengerShop.MvcFrontEnd.csproj", "{BE057AAF-A829-4B09-AF02-72538468A644}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{AEA7629D-3773-4FD2-8CF9-3F57A0070506}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEA7629D-3773-4FD2-8CF9-3F57A0070506}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEA7629D-3773-4FD2-8CF9-3F57A0070506}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE057AAF-A829-4B09-AF02-72538468A644}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE057AAF-A829-4B09-AF02-72538468A644}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE057AAF-A829-4B09-AF02-72538468A644}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE057AAF-A829-4B09-AF02-72538468A644}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

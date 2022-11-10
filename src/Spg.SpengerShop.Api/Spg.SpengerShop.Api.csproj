@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Spg.SpengerShop.Domain\Spg.SpengerShop.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dtos\" />
+  </ItemGroup>
+
 </Project>

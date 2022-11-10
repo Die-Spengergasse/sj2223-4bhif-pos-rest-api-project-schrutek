@@ -1,17 +1,17 @@
-using Microsoft.EntityFrameworkCore;
-using Spg.SpengerShop.Infrastructure;
+//using Microsoft.EntityFrameworkCore;
+//using Spg.SpengerShop.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-DbContextOptions options = new DbContextOptionsBuilder()
-    .UseSqlite("Data Source=SpengerShop.db")
-    .Options;
+//DbContextOptions options = new DbContextOptionsBuilder()
+//    .UseSqlite("Data Source=SpengerShop.db")
+//    .Options;
 
-SpengerShopContext db = new SpengerShopContext(options);
-db.Database.EnsureDeleted();
-db.Database.EnsureCreated();
+//SpengerShopContext db = new SpengerShopContext(options);
+//db.Database.EnsureDeleted();
+//db.Database.EnsureCreated();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

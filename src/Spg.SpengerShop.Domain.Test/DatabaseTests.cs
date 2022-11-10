@@ -27,16 +27,7 @@ namespace Spg.SpengerShop.Domain.Test
             // Arrange
             SpengerShopContext db = GetContext();
 
-            Product newProduct = new Product()
-            {
-                DeliveryDate = DateTime.Now,
-                Ean13 = "132456789123",
-                ExpiaryDate = DateTime.Now,
-                Guid = Guid.NewGuid(),
-                Name = "Test Product",
-                Price = 20.90M,
-                Stock = 10
-            };
+            Product newProduct = new Product("Test Product", "132456789123", 10, Guid.NewGuid(), DateTime.Now, DateTime.Now, 20.90M);
 
             // Act
             db.Products.Add(newProduct);

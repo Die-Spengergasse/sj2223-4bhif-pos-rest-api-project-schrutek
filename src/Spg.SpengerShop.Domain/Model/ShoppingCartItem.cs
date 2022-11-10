@@ -14,7 +14,7 @@ namespace Spg.SpengerShop.Domain.Model
             Price = price;
         }
 
-        public int Id { get; set; }
+        public int Id { get; private set; }
         public decimal Price { get; set; }
         public int Pieces { get; set; }
 

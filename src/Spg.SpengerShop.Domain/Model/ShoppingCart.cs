@@ -16,9 +16,9 @@ namespace Spg.SpengerShop.Domain.Model
             Guid = guid;
         }
 
-        public int Id { get; set; }
-        public States State { get; set; }
-        public Guid Guid { get; set; }
+        public int Id { get; private set; }
+        public Guid Guid { get; private set; }
+        public States State { get; private set; }
 
         // Wird zu FK in der Datenbank
         public virtual int CustomerNavigationId { get; set; }
