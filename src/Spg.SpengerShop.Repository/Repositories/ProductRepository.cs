@@ -22,5 +22,11 @@ namespace Spg.SpengerShop.Repository.Repositories
         {
             return _db.Products;
         }
+
+        public Product GetByName(string name)
+        {
+            return _db.Products.SingleOrDefault(p => p.Name == name) 
+                ?? throw new KeyNotFoundException("");
+        }
     }
 }
