@@ -17,8 +17,9 @@ namespace Spg.SpengerShop.MvcFrontEnd.Controllers
 
         public IActionResult Index()
         {
-            List<Product> model = _readOnlyProductService.GetAll().ToList();
-            return View(model);
+            //List<Product> model = _readOnlyProductService.GetAll().ToList();
+            //return View(model);
+            return View();
         }
     }
 }

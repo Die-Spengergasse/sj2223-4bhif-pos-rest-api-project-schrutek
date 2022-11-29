@@ -74,7 +74,7 @@ namespace Spg.SpengerShop.Infrastructure
                 f.Random.Decimal(5M, 5000M)))
                 .Rules((f, c) =>
                 { })
-            .Generate(800)
+            .Generate(10)
             .GroupBy(g => g.Name)
             .Select(g => g.First())
             .ToList();

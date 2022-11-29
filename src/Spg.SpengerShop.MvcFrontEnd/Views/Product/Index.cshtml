@@ -1,10 +1,53 @@
-﻿@using Spg.SpengerShop.Domain.Model
-@model List<Product>
-
-<h1>Product works!</h1>
-
-@DateTime.Now
+﻿<h1>Product works!</h1>
 
 <hr />
 
-<span>Anzahl Produkte: @Model.Count</span>
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Close Date</th>
+        </tr>
+    </thead>
+    <tbody id="productsContainer"></tbody>
+</table>
+
+<button class="btn btn-primary" onclick="saveProduct();">Speichern</button>
+
+<script type="text/javascript">
+    
+        fetch('https://localhost:7287/api/Products', {
+            method: "GET", 
+            mode: 'cors'
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+
+            const container = document.getElementById("productsContainer");
+            container.innerHTML = '';
+
+            for (let product of data) {
+                const tr = document.createElement("tr");
+                const htmlTable = `
+                <td>${product.name}</td>
+                <td>€ ${product.price}</td>`
+                tr.innerHTML = htmlTable;
+                container.appendChild(tr);
+            }
+        })
+        .catch(err => alert(err.message));
+
+    function saveProduct() {
+        fetch('https://localhost:7287/api/Products', {
+            method: "POST", 
+            mode: 'cors'
+        })
+        .then(response => response.json())
+        .then(data => {
+        })
+        .catch(err => alert(err.message));
+    }
+
+</script>
