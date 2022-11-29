@@ -1,5 +1,4 @@
-﻿using Spg.SpengerShop.Domain.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Spg.SpengerShop.Domain.Interfaces
 {
-    public interface IProductService
+    public interface IDeletableProductService
     {
-        IEnumerable<Product> GetAll();
+        bool Delete(int id);
     }
 }

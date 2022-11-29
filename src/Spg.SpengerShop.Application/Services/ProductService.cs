@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Spg.SpengerShop.Application.Services
 {
-    public class ProductService : IProductService
+    public class ProductService : IAddUpdateableProductService, IReadOnlyProductService
     {
         private readonly IProductRepository _productRepository;
 
@@ -18,9 +18,30 @@ namespace Spg.SpengerShop.Application.Services
             _productRepository = productRepository;
         }
 
+        public void Add(Product newProduct)
+        {
+            // Die Bedingungen zum Eintragen prüfen
+            throw new NotImplementedException();
+        }
+
+        public bool Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Product> GetAll()
         {
             return _productRepository.GetAll();
+        }
+
+        public Product GetByName(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Update(Product product)
+        {
+            throw new NotImplementedException();
         }
     }
 }

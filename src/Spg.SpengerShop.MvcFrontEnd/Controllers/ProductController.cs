@@ -6,16 +6,18 @@ namespace Spg.SpengerShop.MvcFrontEnd.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IProductService _productService;
+        private readonly IAddUpdateableProductService _addUpdateableProductService;
+        private readonly IReadOnlyProductService _readOnlyProductService;
 
-        public ProductController(IProductService productService)
+        public ProductController(IAddUpdateableProductService addUpdateableProductService, IReadOnlyProductService readOnlyProductService)
         {
-            _productService = productService;
+            _addUpdateableProductService = addUpdateableProductService;
+            _readOnlyProductService = readOnlyProductService;
         }
 
         public IActionResult Index()
         {
-            List<Product> model = _productService.GetAll().ToList();
+            List<Product> model = _readOnlyProductService.GetAll().ToList();
             return View(model);
         }
     }

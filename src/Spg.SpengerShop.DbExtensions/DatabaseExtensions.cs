@@ -16,5 +16,20 @@ namespace Spg.SpengerShop.DbExtensions
                 }
             });
         }
+
+        public static void ConfigureMsSql(this IServiceCollection services, string connectionString)
+        {
+            services.AddDbContext<SpengerShopContext>(options =>
+            {
+                if (!options.IsConfigured)
+                {
+                    options.UseSqlServer(connectionString);
+                }
+            });
+        }
+
+        //public static void GenerateDb(this IServiceCollection services)
+        //{
+        //}
     }
 }
