@@ -1,6 +1,7 @@
 //using Microsoft.EntityFrameworkCore;
 //using Spg.SpengerShop.Infrastructure;
 
+using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Spg.SpengerShop.Application.Services;
 using Spg.SpengerShop.DbExtensions;
@@ -29,9 +30,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "myAllowSpecificOrigins", policy =>
     {
         policy.WithOrigins("https://localhost:7042");
+        policy.WithHeaders("ACCESS-CONTROL-ALLOW-ORIGIN", "CONTENT-TYPE");
     });
 });
-
 
 DbContextOptions options = new DbContextOptionsBuilder()
 .UseSqlite(connectionString)
@@ -54,6 +55,7 @@ app.UseHttpsRedirection();
 app.UseCors("myAllowSpecificOrigins");
 app.UseAuthorization();
 
+app.UsePathBase("/myapp");
 app.MapControllers();
 
 app.Run();

@@ -62,15 +62,29 @@ namespace Spg.SpengerShop.Infrastructure
             Customers.AddRange(customers);
             SaveChanges();
 
+            // Seed ShoppimgCarts
+            List<ShoppingCart> shoppingCarts = new Faker<ShoppingCart>("de").CustomInstantiator(f =>
+            new ShoppingCart(
+                States.SENT,
+                f.Random.Guid())).Rules((f, s) => 
+                {
+                    s.CustomerNavigation = f.Random.ListItem(customers);
+                })
+                .Generate(30)
+                .ToList();
+
+            shoppingCarts.AddRange(shoppingCarts);
+            SaveChanges();
+
             // Seed Products
             List<Product> products = new Faker<Product>("de").CustomInstantiator(f =>
             new Product(
                 f.Commerce.ProductName(),
                 f.Commerce.Ean13(),
                 f.Random.Int(0, 20),
-                f.Random.Guid(),
+                //f.Random.Guid(),
                 f.Date.Between(DateTime.Now.AddDays(5), DateTime.Now.AddDays(100)),
-                f.Date.Between(DateTime.Now.AddDays(2), DateTime.Now.AddDays(14)), 
+                f.Date.Between(DateTime.Now.AddDays(2), DateTime.Now.AddDays(14)),
                 f.Random.Decimal(5M, 5000M)))
                 .Rules((f, c) =>
                 { })

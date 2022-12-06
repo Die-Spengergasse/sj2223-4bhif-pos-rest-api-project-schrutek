@@ -26,12 +26,13 @@ namespace Spg.SpengerShop.Api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                // Hier logging einfügen...
+                return BadRequest();
             }
         }
 
         [HttpPost()]
-        public IActionResult Save() 
+        public IActionResult Save([FromBody()] Product product) 
         {
             return Ok();
         }

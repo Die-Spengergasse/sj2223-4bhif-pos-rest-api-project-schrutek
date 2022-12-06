@@ -13,7 +13,15 @@
     <tbody id="productsContainer"></tbody>
 </table>
 
-<button class="btn btn-primary" onclick="saveProduct();">Speichern</button>
+<form>
+    <input id="name" name="name" type="text" />
+    <input id="ean13" name="ean13" type="text" />
+    <input id="stock" name="stock" type="number" />
+    <input id="expiryDate" name="expiryDate" type="date" />
+    <input id="deliveryDate" name="deliveryDate" type="date" />
+    <input id="price" name="price" type="text" />
+    <button class="btn btn-primary" onclick="saveProduct();">Speichern</button>
+</form>
 
 <script type="text/javascript">
     
@@ -40,14 +48,27 @@
         .catch(err => alert(err.message));
 
     function saveProduct() {
+        let formData = {
+            name: document.querySelector('#name').value,
+            ean13: document.querySelector('#ean13').value,
+            stock: document.querySelector('#stock').value,
+            expiryDate: document.querySelector('#expiryDate').value,
+            deliveryDate: document.querySelector('#deliveryDate').value
+        };
+        
         fetch('https://localhost:7287/api/Products', {
+            headers: {
+                'CONTENT-TYPE': 'application/json',
+                'ACCESS-CONTROL-ALLOW-ORIGIN': 'https://localhost:7287'
+            },
             method: "POST", 
-            mode: 'cors'
+            mode: 'cors',
+            body: JSON.stringify(formData)
         })
         .then(response => response.json())
         .then(data => {
         })
-        .catch(err => alert(err.message));
+            .catch(err => alert(err.message));
     }
 
 </script>

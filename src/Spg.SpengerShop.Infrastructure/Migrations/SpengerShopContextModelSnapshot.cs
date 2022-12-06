@@ -92,7 +92,7 @@ namespace Spg.SpengerShop.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ExpiaryDate")
+                    b.Property<DateTime>("ExpiryDate")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("Guid")
