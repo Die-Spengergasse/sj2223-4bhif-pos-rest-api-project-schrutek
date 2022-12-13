@@ -8,7 +8,7 @@ namespace Spg.SpengerShop.DbExtensions
     {
         public static void ConfigureSqLite(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<SpengerShopContext>(options => 
+            services.AddDbContext<SpengerShopContext>(options =>
             {
                 if (!options.IsConfigured)
                 {

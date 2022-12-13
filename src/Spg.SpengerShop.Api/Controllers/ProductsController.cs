@@ -32,8 +32,10 @@ namespace Spg.SpengerShop.Api.Controllers
         }
 
         [HttpPost()]
+        [Produces("application/json")]
         public IActionResult Save([FromBody()] Product product) 
         {
+            // TODO: Add to DB and return 201
             return Ok();
         }
     }
