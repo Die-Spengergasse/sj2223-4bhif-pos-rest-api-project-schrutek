@@ -11,7 +11,7 @@ namespace Spg.SpengerShop.Payment
     {
         public void DoPayment()
         {
-            ETP etp = new ETP();
+            ETP etp = new ETPClient();
             etp.ManualReverseAsync(new ManualReverseRequest() { merchantID = 4711, mpayTID = 123456 });
         }
     }

@@ -34,6 +34,8 @@ namespace Spg.SpengerShop.Infrastructure
 
         public void Seed()
         {
+            Randomizer.Seed = new Random(152320);
+
             // Seed Customers
             List<Customer> customers = new Faker<Customer>("de").CustomInstantiator(f =>
             new Customer(

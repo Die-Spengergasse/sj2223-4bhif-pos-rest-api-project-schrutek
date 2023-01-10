@@ -1,4 +1,7 @@
-﻿namespace Spg.SpengerShop.Domain.Model
+﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices;
+
+namespace Spg.SpengerShop.Domain.Model
 {
     public class Product
     {

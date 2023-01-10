@@ -1,4 +1,5 @@
-﻿using Spg.SpengerShop.Domain.Interfaces;
+﻿using Spg.SpengerShop.Domain.Dtos;
+using Spg.SpengerShop.Domain.Interfaces;
 using Spg.SpengerShop.Domain.Model;
 using Spg.SpengerShop.Repository.Repositories;
 using System;
@@ -29,9 +30,11 @@ namespace Spg.SpengerShop.Application.Services
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Product> GetAll()
+        public IEnumerable<ProductDto> GetAll()
         {
-            return _productRepository.GetAll();
+            IEnumerable<Product> result = _productRepository.GetAll();
+
+            return result.Select(p => new ProductDto(p.Name, p.Ean13, p.ExpiryDate, p.DeliveryDate));
         }
 
         public Product GetByName(string name)

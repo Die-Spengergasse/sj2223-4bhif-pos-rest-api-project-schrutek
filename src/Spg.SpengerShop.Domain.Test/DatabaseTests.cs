@@ -27,7 +27,7 @@ namespace Spg.SpengerShop.Domain.Test
             // Arrange
             SpengerShopContext db = GetContext();
 
-            Product newProduct = new Product("Test Product", "132456789123", 10, Guid.NewGuid(), DateTime.Now, DateTime.Now, 20.90M);
+            Product newProduct = new Product("Test Product", "132456789123", 10, DateTime.Now, DateTime.Now, 20.90M);
 
             // Act
             db.Products.Add(newProduct);
