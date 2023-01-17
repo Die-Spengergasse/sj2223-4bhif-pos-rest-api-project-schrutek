@@ -1,6 +1,7 @@
 //using Microsoft.EntityFrameworkCore;
 //using Spg.SpengerShop.Infrastructure;
 
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -34,7 +35,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Swagger Documentation
+// Swagger Documentation (Open API)
 builder.Services.AddSwaggerGen(s =>
 {
     s.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
@@ -67,6 +68,24 @@ builder.Services.AddCors(options =>
         policy.WithHeaders("ACCESS-CONTROL-ALLOW-ORIGIN", "CONTENT-TYPE");
     });
 });
+
+// API Versioning
+builder.Services.AddApiVersioning(o =>
+{
+    o.AssumeDefaultVersionWhenUnspecified = true;
+    o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+    o.ReportApiVersions = true;
+    o.ApiVersionReader = ApiVersionReader.Combine(
+        new QueryStringApiVersionReader("api-version"),
+        new HeaderApiVersionReader("X-Version"),
+        new MediaTypeApiVersionReader("ver"));
+});
+builder.Services.AddVersionedApiExplorer(
+    options =>
+    {
+        options.GroupNameFormat = "'v'VVV";
+        options.SubstituteApiVersionInUrl = true;
+    });
 
 DbContextOptions options = new DbContextOptionsBuilder()
 .UseSqlite(connectionString)

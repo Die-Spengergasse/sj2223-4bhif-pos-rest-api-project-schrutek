@@ -7,7 +7,8 @@ using Spg.SpengerShop.Domain.Model;
 namespace Spg.SpengerShop.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
     public class ProductsController : ControllerBase
     {
         private readonly IReadOnlyProductService _readOnlyProductService;
