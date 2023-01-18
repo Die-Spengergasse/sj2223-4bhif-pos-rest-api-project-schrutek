@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Spg.SpengerShop.Domain\Spg.SpengerShop.Domain.csproj" />
     <ProjectReference Include="..\Spg.SpengerShop.Repository\Spg.SpengerShop.Repository.csproj" />
   </ItemGroup>

@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Spg.SpengerShop.Domain.Dtos;
 using Spg.SpengerShop.Domain.Interfaces;
 using Spg.SpengerShop.Domain.Model;
 
 namespace Spg.SpengerShop.Api.Controllers
 {
     [ApiController]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    [ApiVersion("1.0")]
+    [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
         private readonly IReadOnlyProductService _readOnlyProductService;
@@ -18,18 +16,12 @@ namespace Spg.SpengerShop.Api.Controllers
             _readOnlyProductService = readOnlyProductService;
         }
 
-        /// <summary>
-        /// Gibt alle Produkte aus der Datenbank zurück.
-        /// </summary>
-        /// <returns>Eine Liste aller Produkte</returns>
         [HttpGet()]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetAll()
         {
             try
             {
-                IEnumerable<ProductDto> result = _readOnlyProductService.GetAll();
+                IEnumerable<Product> result = _readOnlyProductService.GetAll();
                 return Ok(result);
             }
             catch (Exception ex)
@@ -41,14 +33,8 @@ namespace Spg.SpengerShop.Api.Controllers
 
         [HttpPost()]
         [Produces("application/json")]
-        public IActionResult Save([FromBody()] NewProductDto newProduct) 
+        public IActionResult Save([FromBody()] Product product) 
         {
-            // bad Coding
-            //if (string.IsNullOrEmpty(newProduct.Name))
-            //{
-            //    return BadRequest();
-            //}
-
             // TODO: Add to DB and return 201
             return Ok();
         }
