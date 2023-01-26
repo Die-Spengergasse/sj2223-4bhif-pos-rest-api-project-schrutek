@@ -5,7 +5,7 @@ using Spg.SpengerShop.Application.Services.Customers.Queries;
 using Spg.SpengerShop.Domain.Model;
 using System.Linq.Expressions;
 
-namespace Spg.SpengerShop.Api.Controllers
+namespace Spg.SpengerShop.Api.Controllers.V1
 {
     //[Route("api/[controller]")]
     [Route("api/v{version:apiVersion}/Customer")]

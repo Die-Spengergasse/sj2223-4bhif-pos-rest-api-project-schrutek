@@ -3,16 +3,16 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spg.SpengerShop.Application.Services.Customers.Queries;
 
-namespace Spg.SpengerShop.Api.Controllers
+namespace Spg.SpengerShop.Api.Controllers.V2
 {
     [Route("api/v{version:apiVersion}/Customer")]
     [ApiController]
     [ApiVersion("2.0")]
-    public class BetterCustomerController : ControllerBase
+    public class CustomerController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public BetterCustomerController(IMediator mediator)
+        public CustomerController(IMediator mediator)
         {
             _mediator = mediator;
         }
