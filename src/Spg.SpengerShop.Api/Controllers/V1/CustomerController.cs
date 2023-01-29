@@ -1,8 +1,13 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using FluentValidation.Results;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Spg.SpengerShop.Application.Services.Customers.Commands;
 using Spg.SpengerShop.Application.Services.Customers.Queries;
+using Spg.SpengerShop.Domain.Dtos;
 using Spg.SpengerShop.Domain.Model;
+using Spg.SpengerShop.Domain.Filter;
 using System.Linq.Expressions;
 
 namespace Spg.SpengerShop.Api.Controllers.V1
@@ -14,10 +19,12 @@ namespace Spg.SpengerShop.Api.Controllers.V1
     public class CustomerController : ControllerBase
     {
         private readonly IMediator _mediator;
+        //private readonly IValidator<NewCustomerDto> _newCustomerValidator;
 
         public CustomerController(IMediator mediator)
         {
             _mediator = mediator;
+            //_newCustomerValidator = newCustomerValidator;
         }
 
         [HttpGet("{id}")]
@@ -34,11 +41,40 @@ namespace Spg.SpengerShop.Api.Controllers.V1
             return Ok(result);
         }
 
+        [ValidationFilter()]
         [HttpPost()]
-        public async Task<IActionResult> Post([FromBody] Customer dto)
+        public async Task<IActionResult> Post([FromBody] NewCustomerDto dto)
         {
-            var result = await _mediator.Send(new CreateCustomerCommand(dto));
+            if (ModelState.IsValid)
+            {
+                var result = await _mediator.Send(new CreateCustomerCommand(new Customer(GenderTypes.MALE, dto.FirstName, dto.LastName, dto.EMail, new Guid(), DateTime.Now)));
+                return Created("", result);
+            }
+            else
+            {
+                int i = ModelState.ErrorCount;
+                return BadRequest(ModelState
+                    .Where(m => m.Value.Errors.Count > 0)
+                    .ToDictionary(
+                        kvp => kvp.Key,
+                        kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                    ));
+            }
+        }
+
+        [HttpPost("fluent")]
+        public async Task<IActionResult> PostFluent([FromBody] NewCustomerDto dto)
+        {
+            Customer result = await _mediator.Send(new CreateCustomerCommand(new Customer(GenderTypes.MALE, dto.FirstName, dto.LastName, dto.EMail, new Guid(), DateTime.Now)));
             return Created("", result);
+
+            //ValidationResult validationResult = await _newCustomerValidator.ValidateAsync(dto);
+            //if (!validationResult.IsValid)
+            //{
+            //    return BadRequest(validationResult.ToDictionary());
+            //}
+            //Customer result = await _mediator.Send(new CreateCustomerCommand(new Customer(GenderTypes.MALE, dto.FirstName, dto.LastName, dto.EMail, new Guid(), DateTime.Now)));
+            //return Created("", result);
         }
     }
 }

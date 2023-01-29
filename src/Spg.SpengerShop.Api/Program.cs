@@ -1,13 +1,17 @@
 //using Microsoft.EntityFrameworkCore;
 //using Spg.SpengerShop.Infrastructure;
 
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Spg.SpengerShop.Application.Services;
 using Spg.SpengerShop.Application.Services.Customers.Queries;
+using Spg.SpengerShop.Application.Validators;
 using Spg.SpengerShop.DbExtensions;
+using Spg.SpengerShop.Domain.Dtos;
+using Spg.SpengerShop.Domain.Filter;
 using Spg.SpengerShop.Domain.Interfaces;
 using Spg.SpengerShop.Domain.Model;
 using Spg.SpengerShop.Infrastructure;
@@ -34,7 +38,13 @@ builder.Services.AddTransient<IReadOnlyRepositoryBase<Customer>, ReadOnlyReposit
 
 builder.Services.ConfigureSqLite(connectionString);
 
+// Global Filter
+//builder.Services.AddControllers(config =>
+//{
+//    config.Filters.Add(new ValidationFilterAttribute());
+//}); 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -69,6 +79,13 @@ builder.Services.AddCors(options =>
         policy.WithHeaders("ACCESS-CONTROL-ALLOW-ORIGIN", "CONTENT-TYPE");
     });
 });
+
+// Add FluentValidation
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddTransient<IValidator<NewCustomerDto>, NewCustomerDtoValidator>();
+
+// Controller Filter, Action Filter
+builder.Services.AddScoped<ValidationFilterAttribute>();
 
 DbContextOptions options = new DbContextOptionsBuilder()
 .UseSqlite(connectionString)
