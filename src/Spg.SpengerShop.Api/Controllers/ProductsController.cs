@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Connections.Features;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Spg.SpengerShop.Application.Filter;
 using Spg.SpengerShop.Domain.Dtos;
 using Spg.SpengerShop.Domain.Interfaces;
 using Spg.SpengerShop.Domain.Model;
@@ -12,10 +16,12 @@ namespace Spg.SpengerShop.Api.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IReadOnlyProductService _readOnlyProductService;
+        private readonly IValidator<NewProductDto> _validator;
 
-        public ProductsController(IReadOnlyProductService readOnlyProductService)
+        public ProductsController(IReadOnlyProductService readOnlyProductService, IValidator<NewProductDto> validator)
         {
             _readOnlyProductService = readOnlyProductService;
+            _validator = validator;
         }
 
         /// <summary>
@@ -41,16 +47,35 @@ namespace Spg.SpengerShop.Api.Controllers
 
         [HttpPost()]
         [Produces("application/json")]
+        [HasRole()]
         public IActionResult Save([FromBody()] NewProductDto newProduct) 
         {
-            // bad Coding
+            // bad coding
             //if (string.IsNullOrEmpty(newProduct.Name))
             //{
             //    return BadRequest();
             //}
+            //if (newProduct.Name.Length == 0)
+            //{
+            //    return BadRequest();
+            //}
+            //if (newProduct.Name.Length > 20)
+            //{
+            //    return BadRequest();
+            //}
+            // ...
 
-            // TODO: Add to DB and return 201
-            return Ok();
+            // TODO: Create to DB and return 201
+
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest();
+            //}
+            ValidationResult result = _validator.Validate(newProduct);
+            if (result.IsValid)
+            { }
+
+            return Created("url", null);
         }
     }
 }

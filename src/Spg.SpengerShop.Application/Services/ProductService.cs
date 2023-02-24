@@ -19,10 +19,9 @@ namespace Spg.SpengerShop.Application.Services
             _productRepository = productRepository;
         }
 
-        public void Add(Product newProduct)
+        public void Create(Product newProduct)
         {
-            // Die Bedingungen zum Eintragen prüfen
-            throw new NotImplementedException();
+            _productRepository.Create(newProduct);
         }
 
         public bool Delete(int id)

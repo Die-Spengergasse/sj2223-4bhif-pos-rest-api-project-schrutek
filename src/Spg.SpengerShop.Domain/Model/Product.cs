@@ -13,7 +13,7 @@ namespace Spg.SpengerShop.Domain.Model
         public DateTime? DeliveryDate { get; set; }
         public decimal Price { get; set; }
 
-        public Product()
+        protected Product()
         { }
         public Product(string name, string ean13, int stock, DateTime expiryDate, DateTime? deliveryDate, decimal price)
         {

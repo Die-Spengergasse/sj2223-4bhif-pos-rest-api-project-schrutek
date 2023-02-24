@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Spg.SpengerShop.Domain.Model.Category" Collapsed="true">
+    <Position X="2.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAQAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Category.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Spg.SpengerShop.Domain.Model.Customer" Collapsed="true">
+    <Position X="4.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACQEAAAAAAAECAAAAAQBAAACAABACEAAAAAAAAAAg=</HashCode>
+      <FileName>Model\Customer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Spg.SpengerShop.Domain.Model.Product" Collapsed="true">
+    <Position X="6.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAARAAAAAABAAAAAQAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Product.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Spg.SpengerShop.Domain.Model.Shop">
+    <Position X="6.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Shop.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Spg.SpengerShop.Domain.Model.ShoppingCart" Collapsed="true">
+    <Position X="8.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACAAIBAAAAgAAAAAAAAAAAAAAABAAAAAAAFAAAAAA=</HashCode>
+      <FileName>Model\ShoppingCart.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Spg.SpengerShop.Domain.Model.ShoppingCartItem" Collapsed="true">
+    <Position X="9" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAAAAAAAAAAAQAAAAAAAAAAABAAIAAAAAA=</HashCode>
+      <FileName>Model\ShoppingCartItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Spg.SpengerShop.Domain.Model.CategoryTypes" Collapsed="true">
+    <Position X="2.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAgAAACAAAQAAAAAAAAAAAAAAAAAAAAAAACAAgAAAAA=</HashCode>
+      <FileName>Model\Category.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Spg.SpengerShop.Domain.Model.GenderTypes" Collapsed="true">
+    <Position X="4.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAACAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Model\Customer.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Spg.SpengerShop.Domain.Model.States" Collapsed="true">
+    <Position X="8.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAABAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Model\ShoppingCart.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

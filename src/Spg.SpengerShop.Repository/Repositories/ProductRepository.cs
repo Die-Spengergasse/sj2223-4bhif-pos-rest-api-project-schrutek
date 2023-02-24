@@ -19,6 +19,12 @@ namespace Spg.SpengerShop.Repository.Repositories
             _db = db;
         }
 
+        public void Create(Product newProduct)
+        {
+            _db.Products.Add(newProduct);
+            _db.SaveChanges();
+        }
+
         public IEnumerable<Product> GetAll()
         {
             return _db.Products;

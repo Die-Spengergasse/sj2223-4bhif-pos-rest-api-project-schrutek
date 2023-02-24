@@ -1,12 +1,16 @@
 //using Microsoft.EntityFrameworkCore;
 //using Spg.SpengerShop.Infrastructure;
 
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Spg.SpengerShop.Application.Filter;
 using Spg.SpengerShop.Application.Services;
+using Spg.SpengerShop.Application.Validators;
 using Spg.SpengerShop.DbExtensions;
+using Spg.SpengerShop.Domain.Dtos;
 using Spg.SpengerShop.Domain.Interfaces;
 using Spg.SpengerShop.Domain.Model;
 using Spg.SpengerShop.Infrastructure;
@@ -16,7 +20,7 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Create services to the container.
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "";
 
@@ -28,9 +32,11 @@ builder.Services.AddTransient<IRepository<Customer>, CustomerRepository>();
 
 builder.Services.AddTransient<IReadOnlyRepositoryBase<Customer>, ReadOnlyRepositoryBase<Customer>>();
 
+builder.Services.AddTransient<HasRoleAttribute>();
+
 builder.Services.ConfigureSqLite(connectionString);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(configure => configure.Filters.Add(new HasRoleAttribute()));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -57,6 +63,29 @@ builder.Services.AddSwaggerGen(s =>
     });
     s.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"), true);
     s.IncludeXmlComments("C:\\HTL\\Unterricht\\SJ2223\\4BHIF\\sj2223-4bhif-pos-rest-api-project-schrutek\\src\\Spg.SpengerShop.Domain\\bin\\Debug\\net7.0\\Spg.SpengerShop.Domain.xml", true);
+    s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter JWT Token here"
+    });
+    s.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference=new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[]{}
+        }
+    });
 });
 
 // CORS
@@ -86,6 +115,13 @@ builder.Services.AddVersionedApiExplorer(
         options.GroupNameFormat = "'v'VVV";
         options.SubstituteApiVersionInUrl = true;
     });
+
+// Fluent Validation
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddTransient<IValidator<NewProductDto>, NewProductDtoValidator>();
+//builder.Services.AddTransient<IValidator<NewCustomerDto>, NewCustomerDtoValidator>();
+
+
 
 DbContextOptions options = new DbContextOptionsBuilder()
 .UseSqlite(connectionString)
