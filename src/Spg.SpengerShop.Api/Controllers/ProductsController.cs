@@ -17,11 +17,13 @@ namespace Spg.SpengerShop.Api.Controllers
     {
         private readonly IReadOnlyProductService _readOnlyProductService;
         private readonly IValidator<NewProductDto> _validator;
+        private readonly LinkGenerator _linkGenerator;
 
-        public ProductsController(IReadOnlyProductService readOnlyProductService, IValidator<NewProductDto> validator)
+        public ProductsController(IReadOnlyProductService readOnlyProductService, IValidator<NewProductDto> validator, LinkGenerator linkGenerator)
         {
             _readOnlyProductService = readOnlyProductService;
             _validator = validator;
+            _linkGenerator = linkGenerator;
         }
 
         /// <summary>
@@ -43,6 +45,12 @@ namespace Spg.SpengerShop.Api.Controllers
                 // Hier logging einfügen...
                 return BadRequest();
             }
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetDetails(int id)
+        {
+            return null;
         }
 
         [HttpPost()]
@@ -75,7 +83,10 @@ namespace Spg.SpengerShop.Api.Controllers
             if (result.IsValid)
             { }
 
-            return Created("url", null);
+            int newId = 4711;
+            string? url = _linkGenerator.GetUriByAction(HttpContext, nameof(GetDetails), values: new { newId });
+
+            return Created(url, null);
         }
     }
 }
