@@ -47,7 +47,9 @@ namespace Spg.SpengerShop.Api.Controllers.V1
         {
             if (ModelState.IsValid)
             {
-                var result = await _mediator.Send(new CreateCustomerCommand(new Customer(GenderTypes.MALE, dto.FirstName, dto.LastName, dto.EMail, new Guid(), DateTime.Now)));
+                var result = await _mediator.Send(
+                    new CreateCustomerCommand(
+                        new Customer(Guid.NewGuid(), Genders.Male, 123, dto.FirstName, dto.LastName, dto.EMail, new DateTime(1977, 05, 13), DateTime.Now, new Address("x", "x", "x", "x"))));
                 return Created("", result);
             }
             else
@@ -65,7 +67,9 @@ namespace Spg.SpengerShop.Api.Controllers.V1
         [HttpPost("fluent")]
         public async Task<IActionResult> PostFluent([FromBody] NewCustomerDto dto)
         {
-            Customer result = await _mediator.Send(new CreateCustomerCommand(new Customer(GenderTypes.MALE, dto.FirstName, dto.LastName, dto.EMail, new Guid(), DateTime.Now)));
+            Customer result = await _mediator.Send(
+                new CreateCustomerCommand(
+                    new Customer(Guid.NewGuid(), Genders.Male, 123, dto.FirstName, dto.LastName, dto.EMail, new DateTime(1977, 05, 13), DateTime.Now, new Address("x", "x", "x", "x"))));
             return Created("", result);
 
             //ValidationResult validationResult = await _newCustomerValidator.ValidateAsync(dto);

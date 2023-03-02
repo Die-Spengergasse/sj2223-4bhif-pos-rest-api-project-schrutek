@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Spg.SpengerShop.Domain.Interfaces;
+using Spg.SpengerShop.Domain.Model;
 using Spg.SpengerShop.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 namespace Spg.SpengerShop.Repository
 {
     public class ReadOnlyRepositoryBase<TEntity> : IReadOnlyRepositoryBase<TEntity>
-        where TEntity : class, new()
+        where TEntity : class
     {
         public SpengerShopContext Context { get; }
 
@@ -56,6 +57,18 @@ namespace Spg.SpengerShop.Repository
             return result;
         }
 
+        public TEntity? GetById<TKey>(TKey id)
+        {
+            return Context.Set<TEntity>()
+                .Find(id);
+        }
+
+        public T? GetSingleOrDefaultByGuid<T>(Guid guid) where T : class, IFindableByGuid
+        {
+            return Context.Set<T>()
+                .SingleOrDefault(e => e.Guid == guid);
+        }
+
         public async Task<IQueryable<TEntity>> GetAll(
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
             string includeNavigationProperty = "",
@@ -86,16 +99,5 @@ namespace Spg.SpengerShop.Repository
                 take
             );
         }
-
-        //public async Task<TResponse> GetSingleAsync(
-        //    Expression<Func<TResponse, bool>>? filter = null,
-        //    string includeNavigationProperty = "")
-        //{
-        //    return await GetQueryable(
-        //        filter,
-        //        null,
-        //        includeNavigationProperty: includeNavigationProperty
-        //    );
-        //}
     }
 }

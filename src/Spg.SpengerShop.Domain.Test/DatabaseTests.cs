@@ -27,7 +27,7 @@ namespace Spg.SpengerShop.Domain.Test
             // Arrange
             SpengerShopContext db = GetContext();
 
-            Product newProduct = new Product("Test Product", "132456789123", 10, DateTime.Now, DateTime.Now, 20.90M);
+            Product newProduct = new Product("Test Product", 20, "132456789123", "Testmaterial", DateTime.Now, null);
 
             // Act
             db.Products.Add(newProduct);
@@ -42,16 +42,7 @@ namespace Spg.SpengerShop.Domain.Test
         {
             SpengerShopContext db = GetContext();
 
-            Customer newCustomer = new Customer()
-            {
-                EMail = "xy@gmail.at",
-                FirstName="TestFirstName",
-                LastName="TestLastName",
-                Gender=GenderTypes.MALE,
-                Guid=Guid.NewGuid(),
-                RegistrationDateTime=DateTime.Now,
-            };
-
+            Customer newCustomer = new Customer(new Guid("6ecfca13-f862-4c74-ac0e-30a2a62dd128"), Genders.Male, 132456789, "TestFirstName", "TestLastName", "xy@gmail.at", new DateTime(1990, 05, 15), new DateTime(2023, 02, 10), new Address("", "", "", ""));
             db.Customers.Add(newCustomer);
             db.SaveChanges();
 
@@ -64,20 +55,10 @@ namespace Spg.SpengerShop.Domain.Test
             // Arrange
             SpengerShopContext db = GetContext();
 
-            Customer newCustomer = new Customer()
-            {
-                EMail = "xy@gmail.at",
-                FirstName = "TestFirstName",
-                LastName = "TestLastName",
-                Gender = GenderTypes.MALE,
-                Guid = Guid.NewGuid(),
-                RegistrationDateTime = DateTime.Now,
-            };
+            Customer newCustomer = new Customer(new Guid("6ecfca13-f862-4c74-ac0e-30a2a62dd128"), Genders.Male, 132456789, "TestFirstName", "TestLastName", "xy@gmail.at", new DateTime(1990, 05, 15), new DateTime(2023, 02, 10), new Address("", "", "", ""));
             db.Customers.Add(newCustomer);
 
-            ShoppingCart newShoppingCart = new ShoppingCart(States.ACTIVE, Guid.NewGuid())
-            {
-            };
+            ShoppingCart newShoppingCart = new ShoppingCart("", ShoppingCartStates.Active, new DateTime(2023, 02, 15), newCustomer, Guid.NewGuid());
 
             // Act
             newCustomer.AddShoppingCart(newShoppingCart);
@@ -94,21 +75,10 @@ namespace Spg.SpengerShop.Domain.Test
         {
             SpengerShopContext db = GetContext();
 
-            Customer newCustomer = new Customer()
-            {
-                EMail = "xy@gmail.at",
-                FirstName = "TestFirstName",
-                LastName = "TestLastName",
-                Gender = GenderTypes.MALE,
-                Guid = Guid.NewGuid(),
-                RegistrationDateTime = DateTime.Now,
-            };
+            Customer newCustomer = new Customer(new Guid("6ecfca13-f862-4c74-ac0e-30a2a62dd128"), Genders.Male, 132456789, "TestFirstName", "TestLastName", "xy@gmail.at", new DateTime(1990, 05, 15), new DateTime(2023, 02, 10), new Address("", "", "", ""));
             db.Customers.Add(newCustomer);
 
-            ShoppingCart newShoppingCart = new ShoppingCart(States.ACTIVE, Guid.NewGuid())
-            {
-                CustomerNavigation = newCustomer,
-            };
+            ShoppingCart newShoppingCart = new ShoppingCart("", ShoppingCartStates.Active, new DateTime(2023, 02, 15), newCustomer, Guid.NewGuid());
 
             db.SaveChanges();
 

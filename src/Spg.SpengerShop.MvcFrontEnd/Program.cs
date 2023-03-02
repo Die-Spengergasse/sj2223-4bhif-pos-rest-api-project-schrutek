@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "";
 
-// Add services to the container.
+// Create services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IAddUpdateableProductService, ProductService>();
 builder.Services.AddTransient<IReadOnlyProductService, ProductService>();

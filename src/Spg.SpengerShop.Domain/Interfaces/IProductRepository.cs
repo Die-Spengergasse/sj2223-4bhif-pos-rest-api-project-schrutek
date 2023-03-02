@@ -9,6 +9,8 @@ namespace Spg.SpengerShop.Domain.Interfaces
 {
     public interface IProductRepository
     {
+        void Create(Product newProduct);
+
         IEnumerable<Product> GetAll();
     }
 }

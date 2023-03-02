@@ -3,15 +3,14 @@
 
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using MediatR;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Spg.SpengerShop.Application.Filter;
 using Spg.SpengerShop.Application.Services;
-using Spg.SpengerShop.Application.Services.Customers.Queries;
 using Spg.SpengerShop.Application.Validators;
 using Spg.SpengerShop.DbExtensions;
 using Spg.SpengerShop.Domain.Dtos;
-using Spg.SpengerShop.Domain.Filter;
 using Spg.SpengerShop.Domain.Interfaces;
 using Spg.SpengerShop.Domain.Model;
 using Spg.SpengerShop.Infrastructure;
@@ -21,7 +20,7 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Create services to the container.
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "";
 
@@ -29,30 +28,77 @@ builder.Services.AddTransient<IAddUpdateableProductService, ProductService>();
 builder.Services.AddTransient<IReadOnlyProductService, ProductService>();
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
 
-builder.Services.AddTransient<IRequestHandler<GetFilteredCustomerQuery, IQueryable<Customer>>, GetFilteredCustomerHandler>();
-builder.Services.AddTransient<IRequestHandler<GetCustomerByIdQuery, Customer>, GetCustomerByIdQueryHandler>();
-
 builder.Services.AddTransient<IRepository<Customer>, CustomerRepository>();
 
 builder.Services.AddTransient<IReadOnlyRepositoryBase<Customer>, ReadOnlyRepositoryBase<Customer>>();
 
+builder.Services.AddTransient<HasRoleAttribute>();
+
 builder.Services.ConfigureSqLite(connectionString);
 
-// Global Filter
-//builder.Services.AddControllers(config =>
-//{
-//    config.Filters.Add(new ValidationFilterAttribute());
-//}); 
-builder.Services.AddControllers();
-
+builder.Services.AddControllers(configure => configure.Filters.Add(new HasRoleAttribute()));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
-// API-Versioning
-// NuGet: Microsoft.AspNetCore.Mvc.Versioning
-//        Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer
+// Swagger Documentation (Open API)
+builder.Services.AddSwaggerGen(s =>
+{
+    s.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+    {
+        Title = "Spenger Shop - v1",
+        Description = "Description about SpengerShop",
+        Contact = new OpenApiContact()
+        {
+            Name = "Martin Schrutek",
+            Email = "schrutek@spengergasse.at",
+            Url = new Uri("http://www.spengergasse.at")
+        },
+        License = new OpenApiLicense()
+        {
+            Name = "Spenger-Licence",
+            Url = new Uri("http://www.spengergasse.at/licence")
+        },
+        Version = "v1",
+    });
+    s.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"), true);
+    s.IncludeXmlComments("C:\\HTL\\Unterricht\\SJ2223\\4BHIF\\sj2223-4bhif-pos-rest-api-project-schrutek\\src\\Spg.SpengerShop.Domain\\bin\\Debug\\net7.0\\Spg.SpengerShop.Domain.xml", true);
+    s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter JWT Token here"
+    });
+    s.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference=new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[]{}
+        }
+    });
+});
+
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "myAllowSpecificOrigins", policy =>
+    {
+        policy.WithOrigins("https://localhost:7042");
+        policy.WithHeaders("ACCESS-CONTROL-ALLOW-ORIGIN", "CONTENT-TYPE");
+    });
+});
+
+// API Versioning
 builder.Services.AddApiVersioning(o =>
 {
     o.AssumeDefaultVersionWhenUnspecified = true;
@@ -70,22 +116,12 @@ builder.Services.AddVersionedApiExplorer(
         options.SubstituteApiVersionInUrl = true;
     });
 
-// CORS
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: "myAllowSpecificOrigins", policy =>
-    {
-        policy.WithOrigins("https://localhost:7042");
-        policy.WithHeaders("ACCESS-CONTROL-ALLOW-ORIGIN", "CONTENT-TYPE");
-    });
-});
-
-// Add FluentValidation
+// Fluent Validation
 builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddTransient<IValidator<NewCustomerDto>, NewCustomerDtoValidator>();
+builder.Services.AddTransient<IValidator<NewProductDto>, NewProductDtoValidator>();
+//builder.Services.AddTransient<IValidator<NewCustomerDto>, NewCustomerDtoValidator>();
 
-// Controller Filter, Action Filter
-builder.Services.AddScoped<ValidationFilterAttribute>();
+
 
 DbContextOptions options = new DbContextOptionsBuilder()
 .UseSqlite(connectionString)

@@ -23,7 +23,7 @@ namespace Spg.SpengerShop.Repository.Repositories
 
         public async Task<Customer> AddAsync(Customer customer)
         {
-            // TODO: EFCore-Add-Stuff
+            // TODO: EFCore-Create-Stuff
             return customer;
         }
 

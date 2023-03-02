@@ -9,7 +9,7 @@ namespace Spg.SpengerShop.Domain.Interfaces
 {
     public interface IAddUpdateableProductService
     {
-        void Add(Product newProduct);
+        void Create(Product newProduct);
         bool Update(Product product);
     }
 }

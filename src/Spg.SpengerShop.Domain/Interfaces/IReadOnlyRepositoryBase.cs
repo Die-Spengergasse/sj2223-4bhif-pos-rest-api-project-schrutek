@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Spg.SpengerShop.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace Spg.SpengerShop.Domain.Interfaces
 {
-    public interface IReadOnlyRepositoryBase<TEntity>
+    public interface IReadOnlyRepositoryBase<TEntity> 
+        where TEntity : class
     {
         public Task<IQueryable<TEntity>> GetQueryable(
             Expression<Func<TEntity, bool>> filter,
@@ -29,9 +31,5 @@ namespace Spg.SpengerShop.Domain.Interfaces
             string includeNavigationProperty = "",
             int? skip = null,
             int? take = null);
-
-        //public Task<TResponse> GetSingleAsync(
-        //    Expression<Func<TResponse, bool>>? filter = null,
-        //    string includeNavigationProperty = "");
     }
 }
