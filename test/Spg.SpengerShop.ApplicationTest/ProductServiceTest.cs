@@ -27,7 +27,7 @@ namespace Spg.SpengerShop.ApplicationTest
         {
             // Arrange
             SpengerShopContext db = GetContext();
-            Product newProduct = new Product("TestProdukt", "1234567890123", 10, DateTime.Now.AddDays(30), null, 17.50M);
+            Product newProduct = new Product("TestProdukt", 20, "1234567890123", "Testmaterial", new DateTime(2023, 03, 17), null);
 
             // Act
             new ProductService(new ProductRepository(db)).Create(newProduct);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Spg.SpengerShop.Domain.Interfaces;
+using Spg.SpengerShop.Domain.Model;
 using Spg.SpengerShop.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 namespace Spg.SpengerShop.Repository
 {
     public class ReadOnlyRepositoryBase<TEntity> : IReadOnlyRepositoryBase<TEntity>
-        where TEntity : class, new()
+        where TEntity : class
     {
         public SpengerShopContext Context { get; }
 
@@ -20,7 +21,7 @@ namespace Spg.SpengerShop.Repository
             Context = context;
         }
 
-        public async Task<IQueryable<TEntity>> GetQueryable(
+        public IQueryable<TEntity> GetQueryable(
             Expression<Func<TEntity, bool>> filter,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> sortOrder,
             string? includeNavigationProperty = null,
@@ -56,13 +57,25 @@ namespace Spg.SpengerShop.Repository
             return result;
         }
 
-        public async Task<IQueryable<TEntity>> GetAll(
+        public TEntity? GetById<TKey>(TKey id)
+        {
+            return Context.Set<TEntity>()
+                .Find(id);
+        }
+
+        public T? GetSingleOrDefaultByGuid<T>(Guid guid) where T : class, IFindableByGuid
+        {
+            return Context.Set<T>()
+                .SingleOrDefault(e => e.Guid == guid);
+        }
+
+        public IQueryable<TEntity> GetAll(
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
             string includeNavigationProperty = "",
             int? skip = null,
             int? take = null)
         {
-            return await GetQueryable(
+            return GetQueryable(
                 null,
                 orderBy,
                 includeNavigationProperty,
@@ -71,14 +84,14 @@ namespace Spg.SpengerShop.Repository
             );
         }
 
-        public async Task<IQueryable<TEntity>> Get(
+        public IQueryable<TEntity> Get(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
             string includeNavigationProperty = "",
             int? skip = null,
             int? take = null)
         {
-            return await GetQueryable(
+            return GetQueryable(
                 filter,
                 orderBy,
                 includeNavigationProperty,
@@ -86,16 +99,5 @@ namespace Spg.SpengerShop.Repository
                 take
             );
         }
-
-        //public async Task<TResponse> GetSingleAsync(
-        //    Expression<Func<TResponse, bool>>? filter = null,
-        //    string includeNavigationProperty = "")
-        //{
-        //    return await GetQueryable(
-        //        filter,
-        //        null,
-        //        includeNavigationProperty: includeNavigationProperty
-        //    );
-        //}
     }
 }

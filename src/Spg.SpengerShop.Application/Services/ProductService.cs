@@ -33,7 +33,7 @@ namespace Spg.SpengerShop.Application.Services
         {
             IEnumerable<Product> result = _productRepository.GetAll();
 
-            return result.Select(p => new ProductDto(p.Name, p.Ean13, p.ExpiryDate, p.DeliveryDate));
+            return result.Select(p => new ProductDto(p.Name, p.Ean13, p.ExpiryDate.Value, p.DeliveryDate));
         }
 
         public Product GetByName(string name)
