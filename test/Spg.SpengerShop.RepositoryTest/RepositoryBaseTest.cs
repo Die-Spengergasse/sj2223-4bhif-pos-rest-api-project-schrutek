@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Spg.SpengerShop.Domain.Exceptions;
 using Spg.SpengerShop.Domain.Model;
 using Spg.SpengerShop.Infrastructure;
 using Spg.SpengerShop.Repository;
@@ -17,16 +18,58 @@ namespace Spg.SpengerShop.RepositoryTest
         [Fact()]
         public void Product_Create_Success_Test()
         {
-            using SpengerShopContext db = new SpengerShopContext(DatabaseUtilities.GetDbOptions());
+            using (SpengerShopContext db = new SpengerShopContext(DatabaseUtilities.GetDbOptions()))
+            {
+                // Arrange
+                DatabaseUtilities.InitializeDatabase(db);
+                Product newProduct = new Product(
+                    "TestProdukt 02", 
+                    20, 
+                    "1234567890123", 
+                    "Testmaterial", 
+                    new DateTime(2023, 03, 17),
+                    DatabaseUtilities.GetSeedingCategories(DatabaseUtilities.GetSeedingShops()[0], 1)[0]);
 
-            // Arrange
-            Product newProduct = new Product("TestProdukt", 20, "1234567890123", "Testmaterial", new DateTime(2023, 03, 17), null);
+                // Act
+                new RepositoryBase<Product>(db).Create(newProduct);
 
-            // Act
-            new RepositoryBase<Product>(db).Create(newProduct);
+                // Assert
+                Assert.Equal(2, db.Products.Count());
+            }
+        }
 
-            // Assert
-            Assert.Single(db.Products.ToList());
+        [Fact()]
+        public void Product_Create_CategoryForeignKeyConstraint_Test()
+        {
+            using (SpengerShopContext db = new SpengerShopContext(DatabaseUtilities.GetDbOptions()))
+            {
+                // Arrange
+                DatabaseUtilities.InitializeDatabase(db);
+                Product newProduct = new Product(
+                    "TestProdukt 02",
+                    20,
+                    "1234567890123",
+                    "Testmaterial",
+                    new DateTime(2023, 03, 17),
+                    null!);
+
+                // Act + Assert
+                Assert.Throws<RepositoryCreateException>(() => new RepositoryBase<Product>(db).Create(newProduct));
+            }
+        }
+
+        [Fact()]
+        public void Product_Create_ProductIsNull_Test()
+        {
+            using (SpengerShopContext db = new SpengerShopContext(DatabaseUtilities.GetDbOptions()))
+            {
+                // Arrange
+                DatabaseUtilities.InitializeDatabase(db);
+                Product newProduct = null!;
+
+                // Act + Assert
+                Assert.Throws<RepositoryCreateException>(() => new RepositoryBase<Product>(db).Create(newProduct));
+            }
         }
 
         [Fact()]
@@ -70,10 +113,10 @@ namespace Spg.SpengerShop.RepositoryTest
                 DatabaseUtilities.InitializeDatabase(db);
 
                 // Act
-                Product active = new ReadOnlyRepositoryBase<Product>(db).GetById("TestProdukt")!;
+                Product active = new ReadOnlyRepositoryBase<Product>(db).GetById("TestProdukt 01")!;
 
                 // Assert
-                Assert.Equal("TestProdukt", active.Name);
+                Assert.Equal("TestProdukt 01", active.Name);
             }
         }
     }

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Spg.SpengerShop.Domain.Exceptions;
 using Spg.SpengerShop.Domain.Interfaces;
 using Spg.SpengerShop.Infrastructure;
 using System;
@@ -20,8 +22,22 @@ namespace Spg.SpengerShop.Repository
 
         public void Create(TEntity newEntity)
         {
+            // TODO: NULL-Handling
+            if (newEntity is null)
+            {
+                throw new RepositoryCreateException($"{nameof(TEntity)} war NULL!");
+            }
+
+            // TODO: Exception Handling
             _db.Add(newEntity);
-            _db.SaveChanges();
+            try
+            {
+                _db.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new RepositoryCreateException($"Create ist für {nameof(TEntity)} fehlgeschlagen!", ex);
+            }
         }
 
         public void Delete<TKey>(TKey id)

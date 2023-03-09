@@ -30,8 +30,8 @@ namespace Spg.SpengerShop.RepositoryTest.Helpers
             db.Shops.AddRange(GetSeedingShops());
             db.SaveChanges();
 
-            db.Categories.AddRange(GetSeedingCategories(db.Shops.Single(s => s.Id == 1)));
-            db.Categories.AddRange(GetSeedingCategories(db.Shops.Single(s => s.Id == 2)));
+            db.Categories.AddRange(GetSeedingCategories(db.Shops.Single(s => s.Id == 1), 1));
+            db.Categories.AddRange(GetSeedingCategories(db.Shops.Single(s => s.Id == 2), 2));
             db.SaveChanges();
 
             db.Customers.AddRange(GetSeedingCustomers());
@@ -45,7 +45,7 @@ namespace Spg.SpengerShop.RepositoryTest.Helpers
             // db.SaveChanges();
         }
 
-        private static List<Shop> GetSeedingShops()
+        public static List<Shop> GetSeedingShops()
         {
             return new List<Shop>()
             {
@@ -54,16 +54,26 @@ namespace Spg.SpengerShop.RepositoryTest.Helpers
             };
         }
 
-        private static List<Category> GetSeedingCategories(Shop shop)
+        public static List<Category> GetSeedingCategories(Shop shop, int index)
         {
-            return new List<Category>()
+            switch (index)
             {
-                new Category("DVD", new Guid("d2616f6e-7424-4b9f-bf81-6aad88183f41"), shop),
-                new Category("Bücher", new Guid("34993d53-a315-4e4d-aaf8-4406ec5a45b3"), shop),
-            };
+                case 1:
+                    return new List<Category>()
+                    {
+                        new Category("DVD", new Guid("d2616f6e-7424-4b9f-bf81-6aad88183f41"), shop),
+                        new Category("Bücher", new Guid("34993d53-a315-4e4d-aaf8-4406ec5a45b3"), shop),
+                    };
+                default:
+                    return new List<Category>()
+                    {
+                        new Category("Kleidung", new Guid("443ea8a1-fcfa-4ca1-88d6-0a8b4a28d07a"), shop),
+                        new Category("Elektronik", new Guid("723e4dd4-e742-4c19-b605-617df8c6d7f1"), shop),
+                    };
+            }
         }
 
-        private static List<Customer> GetSeedingCustomers()
+        public static List<Customer> GetSeedingCustomers()
         {
             return new List<Customer>()
             {
@@ -71,11 +81,11 @@ namespace Spg.SpengerShop.RepositoryTest.Helpers
             };
         }
 
-        private static List<Product> GetSeedingProducts(Category category)
+        public static List<Product> GetSeedingProducts(Category category)
         {
             return new List<Product>()
             {
-                new Product("TestProdukt", 20, "1234567890123", "Testmaterial", new DateTime(2023, 03, 17), category)
+                new Product("TestProdukt 01", 20, "1234567890123", "Testmaterial", new DateTime(2023, 03, 17), category)
             };
         }
 
