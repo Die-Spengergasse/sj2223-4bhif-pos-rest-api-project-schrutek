@@ -55,7 +55,7 @@ namespace Spg.SpengerShop.Api.Controllers
 
         [HttpPost()]
         [Produces("application/json")]
-        [HasRole()]
+        //[HasRole()]
         public IActionResult Save([FromBody()] NewProductDto newProduct) 
         {
             // bad coding
@@ -73,8 +73,6 @@ namespace Spg.SpengerShop.Api.Controllers
             //}
             // ...
 
-            // TODO: Create to DB and return 201
-
             //if (!ModelState.IsValid)
             //{
             //    return BadRequest();
@@ -83,10 +81,7 @@ namespace Spg.SpengerShop.Api.Controllers
             if (result.IsValid)
             { }
 
-            int newId = 4711;
-            string? url = _linkGenerator.GetUriByAction(HttpContext, nameof(GetDetails), values: new { newId });
-
-            return Created(url, null);
+            return Created("", null);
         }
     }
 }

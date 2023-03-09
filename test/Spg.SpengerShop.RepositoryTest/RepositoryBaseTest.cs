@@ -23,7 +23,7 @@ namespace Spg.SpengerShop.RepositoryTest
             Product newProduct = new Product("TestProdukt", 20, "1234567890123", "Testmaterial", new DateTime(2023, 03, 17), null);
 
             // Act
-            new RepositoryBase<string, Product>(db).Create(newProduct);
+            new RepositoryBase<Product>(db).Create(newProduct);
 
             // Assert
             Assert.Single(db.Products.ToList());

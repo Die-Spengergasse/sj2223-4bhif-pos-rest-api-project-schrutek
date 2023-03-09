@@ -12,6 +12,10 @@ namespace Spg.SpengerShop.Domain.Interfaces
     public interface IReadOnlyRepositoryBase<TEntity> 
         where TEntity : class
     {
+        TEntity? GetById<TKey>(TKey id);
+
+        T? GetSingleOrDefaultByGuid<T>(Guid guid) where T : class, IFindableByGuid;
+
         public Task<IQueryable<TEntity>> GetQueryable(
             Expression<Func<TEntity, bool>> filter,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> sortOrder,

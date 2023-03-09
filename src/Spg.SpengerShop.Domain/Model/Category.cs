@@ -12,6 +12,7 @@ namespace Spg.SpengerShop.Domain.Model
         protected Category() { }
         public Category(string name, Guid guid, Shop shop)
         {
+            Guid = guid;
             Name = name;
             ShopNavigation = shop;
         }

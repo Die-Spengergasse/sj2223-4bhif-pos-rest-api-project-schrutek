@@ -62,6 +62,16 @@ namespace Spg.SpengerShop.Repository
             return Context.Set<TEntity>()
                 .Find(id);
         }
+        public TEntity? GetById<TKey1, TKey2>(TKey1 pkp1, TKey2 pkp2)
+        {
+            return Context.Set<TEntity>()
+                .Find(new object[] { pkp1, pkp2 });
+        }
+        public TEntity? GetById<TKey1, TKey2, TKey3>(TKey1 pkp1, TKey2 pkp2, TKey3 pkp3)
+        {
+            return Context.Set<TEntity>()
+                .Find(new object[] { pkp1, pkp2, pkp3 });
+        }
 
         public T? GetSingleOrDefaultByGuid<T>(Guid guid) where T : class, IFindableByGuid
         {

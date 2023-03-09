@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Spg.SpengerShop.Repository
 {
-    public class RepositoryBase<TKey, TEntity> : IRepositoryBase<TKey, TEntity>
+    public class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
     {
         private readonly SpengerShopContext _db;
 
@@ -24,12 +24,12 @@ namespace Spg.SpengerShop.Repository
             _db.SaveChanges();
         }
 
-        public void Delete(TKey id)
+        public void Delete<TKey>(TKey id)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(TKey id, TEntity newEntity)
+        public void Update<TKey>(TKey id, TEntity newEntity)
         {
             throw new NotImplementedException();
         }

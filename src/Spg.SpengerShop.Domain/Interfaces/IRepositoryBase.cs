@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Spg.SpengerShop.Domain.Interfaces
 {
-    public interface IRepositoryBase<TKey, TEntity>
+    public interface IRepositoryBase<TEntity>
     {
         void Create(TEntity newEntity);
 
-        void Update(TKey id, TEntity newEntity);
+        void Update<TKey>(TKey id, TEntity newEntity);
 
-        void Delete(TKey id);
+        void Delete<TKey>(TKey id);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Spg.SpengerShop.Domain.Model;
+﻿using Spg.SpengerShop.Domain.Dtos;
+using Spg.SpengerShop.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Spg.SpengerShop.Domain.Interfaces
 {
     public interface IAddUpdateableProductService
     {
-        void Create(Product newProduct);
+        void Create(ProductDto newProduct);
         bool Update(Product product);
     }
 }

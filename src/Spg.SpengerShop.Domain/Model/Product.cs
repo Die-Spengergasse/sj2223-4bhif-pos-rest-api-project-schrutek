@@ -5,7 +5,7 @@ namespace Spg.SpengerShop.Domain.Model
 {
     public class Product
     {
-        public string Name { get; private set; } = string.Empty;
+        public string Name { get; private set; } = string.Empty; // PK
         public int Tax { get; set; } // Steuerklasse
         public string Ean13 { get; set; } = string.Empty;
         public string? Material { get; set; } = string.Empty;
