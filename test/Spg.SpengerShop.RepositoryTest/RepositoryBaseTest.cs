@@ -23,10 +23,10 @@ namespace Spg.SpengerShop.RepositoryTest
                 // Arrange
                 DatabaseUtilities.InitializeDatabase(db);
                 Product newProduct = new Product(
-                    "TestProdukt 02", 
-                    20, 
-                    "1234567890123", 
-                    "Testmaterial", 
+                    "TestProdukt 02",
+                    20,
+                    "1234567890123",
+                    "Testmaterial",
                     new DateTime(2023, 03, 17),
                     DatabaseUtilities.GetSeedingCategories(DatabaseUtilities.GetSeedingShops()[0], 1)[0]);
 

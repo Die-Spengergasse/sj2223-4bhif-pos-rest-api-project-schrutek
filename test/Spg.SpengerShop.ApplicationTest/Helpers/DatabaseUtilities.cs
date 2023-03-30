@@ -85,7 +85,11 @@ namespace Spg.SpengerShop.ApplicationTest.Helpers
         {
             return new List<Product>()
             {
-                new Product("TestProdukt", 20, "1234567890123", "Testmaterial", new DateTime(2023, 03, 17), category)
+                new Product("Mobiltelefon", 20, "1234567890145", "Plastik", new DateTime(2023, 04, 12), category),
+                new Product("Apfel", 20, "1234567890178", "Sauer", new DateTime(2023, 06, 19), category),
+                new Product("Mobilkran", 20, "1234567890189", "Stahl", new DateTime(2023, 03, 30), category),
+                new Product("Zwetscke", 20, "1234567890119", "Schnaps", new DateTime(2023, 05, 28), category),
+                new Product("Cooles T-Shirt", 20, "1234567890173", "Stoff", new DateTime(2023, 07, 13), category),
             };
         }
 

@@ -11,6 +11,6 @@ namespace Spg.SpengerShop.Domain.Interfaces
     {
         void Create(Product newProduct);
 
-        IEnumerable<Product> GetAll();
+        IQueryable<Product> GetAll();
     }
 }

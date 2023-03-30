@@ -43,12 +43,28 @@ namespace Spg.SpengerShop.Application.Services
         public void Create(ProductDto dto)
         {
             // Init
-            Category category = _readOnlyCategoryRepository.GetSingleOrDefaultByGuid<Category>(dto.CategoryId);
+            Category category;
+            try
+            {
+                category = _readOnlyCategoryRepository.GetSingleOrDefaultByGuid<Category>(dto.CategoryId)
+                    ?? throw new ProductCreateValidationException("Kategorie wurde nicht gefunden!");
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new ProductCreateValidationException("Kategorie mehrmals vorhanden!", ex);
+            }
 
             // Validation
+            // ExpiryDate muss 2 Wochen in der Zukunft liegen
             if (dto.ExpiryDate < _dateTimeService.UtcNow.AddDays(14))
             {
                 throw new ProductCreateValidationException("Datum muss 2 Wochen in Zukunft liegen!");
+            }
+            // Name muss unique sein
+            // TODO: Implementation
+            if (_readOnlyProductRepository.GetById(dto.Name) is not null)
+            {
+                throw new ProductCreateValidationException("Das Produkt existiert bereits!");
             }
 
             // Mapping

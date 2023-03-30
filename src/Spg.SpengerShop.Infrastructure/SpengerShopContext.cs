@@ -12,14 +12,14 @@ namespace Spg.SpengerShop.Infrastructure
 {
     public class SpengerShopContext : DbContext
     {
-        public DbSet<Shop> Shops => Set<Shop>();
-        public DbSet<Category> Categories => Set<Category>();
-        public DbSet<Customer> Customers => Set<Customer>();
-        public DbSet<Product> Products => Set<Product>();
-        public DbSet<Price> Prices => Set<Price>();
-        public DbSet<CatPriceType> CatPriceTypes => Set<CatPriceType>();
-        public DbSet<ShoppingCart> ShoppingCarts => Set<ShoppingCart>();
-        public DbSet<ShoppingCartItem> ShoppingCartItems => Set<ShoppingCartItem>();
+        public virtual DbSet<Shop> Shops => Set<Shop>();
+        public virtual DbSet<Category> Categories => Set<Category>();
+        public virtual DbSet<Customer> Customers => Set<Customer>();
+        public virtual DbSet<Product> Products => Set<Product>();
+        public virtual DbSet<Price> Prices => Set<Price>();
+        public virtual DbSet<CatPriceType> CatPriceTypes => Set<CatPriceType>();
+        public virtual DbSet<ShoppingCart> ShoppingCarts => Set<ShoppingCart>();
+        public virtual DbSet<ShoppingCartItem> ShoppingCartItems => Set<ShoppingCartItem>();
 
         public SpengerShopContext()
         { }
