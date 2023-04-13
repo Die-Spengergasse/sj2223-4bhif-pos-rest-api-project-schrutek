@@ -10,8 +10,11 @@ namespace Spg.SpengerShop.Domain.Interfaces
 {
     public interface IReadOnlyProductService
     {
-        IEnumerable<ProductDto> GetAll();
-        Product GetByName(string name);
+        IQueryable<Product> Products { get; set; }
 
+        IReadOnlyProductService Load();
+        IEnumerable<ProductDto> GetData();
+
+        Product GetByName(string name);
     }
 }

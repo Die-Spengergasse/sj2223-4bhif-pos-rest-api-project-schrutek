@@ -10,7 +10,7 @@ namespace Spg.SpengerShop.Domain.Dtos
     {
         public string Name { get; set; } = string.Empty;
         public string Ean13 { get; set; } = string.Empty;
-        public DateTime ExpiryDate { get; set; }
+        public DateTime? ExpiryDate { get; set; }
         public DateTime? DeliveryDate { get; set; }
         public Guid CategoryId { get; set; }
     }

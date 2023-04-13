@@ -14,7 +14,7 @@ namespace Spg.SpengerShop.Repository
     public class ReadOnlyRepositoryBase<TEntity> : IReadOnlyRepositoryBase<TEntity>
         where TEntity : class
     {
-        public SpengerShopContext Context { get; }
+        public SpengerShopContext Context { get; } // Dont Do
 
         public ReadOnlyRepositoryBase(SpengerShopContext context)
         {

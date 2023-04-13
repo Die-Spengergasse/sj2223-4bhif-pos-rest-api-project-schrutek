@@ -1,9 +1,11 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Connections.Features;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spg.SpengerShop.Application.Filter;
+using Spg.SpengerShop.Application.Services.Extensions;
 using Spg.SpengerShop.Domain.Dtos;
 using Spg.SpengerShop.Domain.Interfaces;
 using Spg.SpengerShop.Domain.Model;
@@ -37,7 +39,12 @@ namespace Spg.SpengerShop.Api.Controllers
         {
             try
             {
-                IEnumerable<ProductDto> result = _readOnlyProductService.GetAll();
+                IEnumerable<ProductDto> result = _readOnlyProductService
+                    .Load()
+                    .UseNameContainsFilter("awesome")
+                    .UseFilterByStock(10)
+                    .UseSorting("name")
+                    .GetData();
                 return Ok(result);
             }
             catch (Exception ex)
@@ -80,6 +87,9 @@ namespace Spg.SpengerShop.Api.Controllers
             ValidationResult result = _validator.Validate(newProduct);
             if (result.IsValid)
             { }
+
+            int newId = 4711;
+            string? url = _linkGenerator.GetUriByAction(HttpContext, action: nameof(GetDetails), values: new { name = newId });
 
             return Created("", null);
         }

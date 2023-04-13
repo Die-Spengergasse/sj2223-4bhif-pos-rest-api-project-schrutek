@@ -7,6 +7,7 @@ using Spg.SpengerShop.Repository.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,9 +24,11 @@ namespace Spg.SpengerShop.Application.Services
         private readonly IReadOnlyRepositoryBase<Category> _readOnlyCategoryRepository;
         private readonly IDateTimeService _dateTimeService;
 
+        public IQueryable<Product> Products { get; set; }
+
         public ProductService(
-            IRepositoryBase<Product> productRepository, 
-            IReadOnlyRepositoryBase<Product> readOnlyProductRepository, 
+            IRepositoryBase<Product> productRepository,
+            IReadOnlyRepositoryBase<Product> readOnlyProductRepository,
             IReadOnlyRepositoryBase<Category> readOnlyCategoryRepository,
             IDateTimeService dateTimeService)
         {
@@ -33,6 +36,39 @@ namespace Spg.SpengerShop.Application.Services
             _readOnlyProductRepository = readOnlyProductRepository;
             _readOnlyCategoryRepository = readOnlyCategoryRepository;
             _dateTimeService = dateTimeService;
+        }
+
+        public IReadOnlyProductService Load()
+        {
+            Products = _readOnlyProductRepository
+                .GetAll()
+                .Result;
+            return this;
+        }
+
+        public IEnumerable<ProductDto> GetData()
+        {
+            // TODO: Alternativ: LinQ-Select or AutoMapper
+            List<ProductDto> result = new List<ProductDto>();
+            foreach (Product product in Products)
+            {
+                ProductDto dto = new ProductDto() { Name = product.Name, Ean13 = product.Ean13, ExpiryDate = product.ExpiryDate };
+            }
+            return result;
+        }
+
+        // TODO: Implement Paging
+        // DO: IEnumerable??<ProductDto> GetDataPaged()
+
+        /// <summary>
+        /// Show Product Details
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public Product GetByName(string name)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -77,16 +113,6 @@ namespace Spg.SpengerShop.Application.Services
         }
 
         public bool Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<ProductDto> GetAll()
-        {
-            return null;
-        }
-
-        public Product GetByName(string name)
         {
             throw new NotImplementedException();
         }
