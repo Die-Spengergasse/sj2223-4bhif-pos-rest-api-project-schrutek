@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Spg.SpengerShop.Domain.Interfaces;
 using Spg.SpengerShop.Domain.Model;
+using Spg.SpengerShop.MvcFrontEnd.Filters;
 
 namespace Spg.SpengerShop.MvcFrontEnd.Controllers
 {

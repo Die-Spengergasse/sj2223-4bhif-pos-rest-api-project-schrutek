@@ -42,12 +42,13 @@ builder.Services.AddTransient<IReadOnlyRepositoryBase<Customer>, ReadOnlyReposit
 builder.Services.AddTransient<IDateTimeService, DateTimeService>();
 
 // Global Filter
-builder.Services.AddTransient<HasRoleAttribute>();
+//builder.Services.AddTransient<HasRoleAttribute>();
 
 // Configure DB
 builder.Services.ConfigureSqLite(connectionString);
 
-builder.Services.AddControllers(configure => configure.Filters.Add(new HasRoleAttribute()));
+//builder.Services.AddControllers(configure => configure.Filters.Add(new HasRoleAttribute()));
+builder.Services.AddControllers();
 
 // Configure Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -73,8 +74,28 @@ builder.Services.AddSwaggerGen(s =>
         },
         Version = "v1",
     });
+
+    s.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo()
+    {
+        Title = "Spenger Shop - v2",
+        Description = "Description about SpengerShop",
+        Contact = new OpenApiContact()
+        {
+            Name = "Martin Schrutek",
+            Email = "schrutek@spengergasse.at",
+            Url = new Uri("http://www.spengergasse.at")
+        },
+        License = new OpenApiLicense()
+        {
+            Name = "Spenger-Licence",
+            Url = new Uri("http://www.spengergasse.at/licence")
+        },
+        Version = "v2",
+    });
+
     s.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"), true);
     s.IncludeXmlComments("C:\\HTL\\Unterricht\\SJ2223\\4BHIF\\sj2223-4bhif-pos-rest-api-project-schrutek\\src\\Spg.SpengerShop.Domain\\bin\\Debug\\net7.0\\Spg.SpengerShop.Domain.xml", true);
+    
     // Configure Swagger Authorization
     s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -150,7 +171,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "V1");
+        options.SwaggerEndpoint("/swagger/v2/swagger.json", "V2");
+    });
 }
 
 app.UseHttpsRedirection();

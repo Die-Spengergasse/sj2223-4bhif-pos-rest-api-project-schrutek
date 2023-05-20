@@ -1,0 +1,10 @@
+﻿@using Spg.SpengerShop.Domain.Dtos;
+@model LoginDto
+
+@DateTime.Now.AddDays(5);
+
+<form method="post">
+    <label for="UserName">Username:</label>
+    <input type="text" asp-for="@Model.UserName" />
+    <button type="submit">Login</button>
+</form>

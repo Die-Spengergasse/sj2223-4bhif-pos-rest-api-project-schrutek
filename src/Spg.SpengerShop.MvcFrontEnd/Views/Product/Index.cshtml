@@ -25,9 +25,10 @@
 
 <script type="text/javascript">
     
-        fetch('https://localhost:7287/api/Products', {
+        fetch('https://localhost:7287/api/v1/Products', {
             method: "GET", 
-            mode: 'cors'
+            mode: 'cors',
+            credentials: 'include'
         })
         .then(response => response.json())
         .then(data => {

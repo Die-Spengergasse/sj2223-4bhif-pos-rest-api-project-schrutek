@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Spg.SpengerShop.Domain.Exceptions;
 using Spg.SpengerShop.Domain.Interfaces;
 using Spg.SpengerShop.Domain.Model;
 using System;
@@ -24,8 +25,8 @@ namespace Spg.SpengerShop.Application.Services.Customers.Queries
 
         public async Task<Customer> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
         {
-            return null;
-            //return await _repository.GetSingleAsync();
+            return await Task.Run(() => _repository.GetSingleOrDefaultByGuid<Customer>(request.Guid)) 
+                ?? throw new CustomerValidationExcpetion("Customer konnte nicht gefunden werden!");
         }
     }
 }

@@ -17,6 +17,10 @@ namespace Spg.SpengerShop.Application.Services
     {
         public string Name { get; set; }
     }
+
+    /// <summary>
+    /// C.R.U.D.
+    /// </summary>
     public class ProductService : IAddUpdateableProductService, IReadOnlyProductService
     {
         private readonly IRepositoryBase<Product> _productRepository;

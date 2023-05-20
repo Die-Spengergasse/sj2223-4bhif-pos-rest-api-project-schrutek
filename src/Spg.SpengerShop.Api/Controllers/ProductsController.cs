@@ -37,6 +37,8 @@ namespace Spg.SpengerShop.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetAll()
         {
+            string? username = HttpContext.Request.Cookies["4bhif_login"];
+
             try
             {
                 IEnumerable<ProductDto> result = _readOnlyProductService
